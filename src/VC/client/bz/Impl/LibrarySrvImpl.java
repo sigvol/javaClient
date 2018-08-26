@@ -14,6 +14,7 @@ public class LibrarySrvImpl extends ClientSrvImpl{
 		super();
 	}
 	
+	//注意不要忘记MessageType的设置
 	public List<Book> searchName(String bookname) throws IOException, ClassNotFoundException {
 		
 		List<Book> retBooklist = new ArrayList<Book>();
