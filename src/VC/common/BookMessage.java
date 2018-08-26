@@ -2,17 +2,16 @@ package VC.common;
 
 import java.util.List;
 
-public class BookMessage implements java.io.Serializable{
+public class BookMessage extends Message{
 
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7021817663078650928L;
+	private static final long serialVersionUID = -1428457839957205171L;
 	private String bookname;
 	private String bookauthor;
 	private Book book;
-	private String type;
 	
 	private List<Book> bookdata;
 	
@@ -41,13 +40,6 @@ public class BookMessage implements java.io.Serializable{
 		this.bookauthor = bookauthor;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public List<Book> getBookdata() {
 		return bookdata;
