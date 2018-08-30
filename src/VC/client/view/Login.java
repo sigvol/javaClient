@@ -1,15 +1,18 @@
 package VC.client.view;
-import java.awt.event.KeyEvent;
+
+
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.*;
 
+import java.io.IOException;
+
+import VC.client.bz.Impl.LoginSrvImpl;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
@@ -33,9 +36,15 @@ public class Login extends Application{
 	private FlowPane pane = new FlowPane();	
 	private DoubleProperty balance = new SimpleDoubleProperty();
 
+	//用于登录的
+	public LoginSrvImpl loginsrv = new LoginSrvImpl();
+	
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
 	
 	
-	public void start(final Stage login) {
+	public void start(Stage login) {
 		pane.setPadding(new Insets(11,12,13,14));
 		pane.setHgap(15);
 		pane.setVgap(10);
@@ -50,12 +59,12 @@ public class Login extends Application{
 		pane.getChildren().addAll(password);
 		
 		
-		password.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() {
-			@Override
-			public void handle(javafx.scene.input.KeyEvent e) {if(e.getCode()==KeyCode.ENTER)logAction();}
+		password.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent e) {
+				if(e.getCode()==KeyCode.ENTER)logAction();
+			}
 		});
 		log.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				logAction();
 			}
@@ -63,7 +72,6 @@ public class Login extends Application{
 		pane.getChildren().addAll(log);
 		
 		sign.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				signAction();
 			}
@@ -71,7 +79,6 @@ public class Login extends Application{
 		pane.getChildren().addAll(sign);
 		
 		forget.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				forgetAction();
 			}
@@ -106,6 +113,32 @@ public class Login extends Application{
 	private void logAction() {
 		String RightAccount = "seu";
 		String RightPassword = "dongdajiruan";
+		// 就比如这个地方就要用sendmessage方法发送账户,并接受密码来比较
+		// 然后才有下面的这个操作
+		// 实现如下
+		try {
+			try {
+				if(loginsrv.judgeLogin(account.getText(), password.getText())) {
+					Menu a = new Menu();
+					Stage menu = new Stage();
+					a.start(menu);
+					balance.set(1);
+				}
+				else {
+					password.setText("");
+					tip.setText("账户或密码输入错误，请重试");
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		// 完成实现
 		if(account.getText().equals(RightAccount) && password.getText().equals(RightPassword)) {
 			Menu a = new Menu();
 			Stage menu = new Stage();
@@ -159,12 +192,12 @@ public class Login extends Application{
 		s.add(newpassword1,1,3);
 		
 		Button b1 = new Button("确		认");
-		newpassword1.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() {
-			@Override
-			public void handle(javafx.scene.input.KeyEvent e) {if(e.getCode()==KeyCode.ENTER)SignAction();}
+		newpassword1.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent e) {
+				if(e.getCode()==KeyCode.ENTER)logAction();
+			}
 		});
 		b1.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				SignAction();
 			}
@@ -173,7 +206,6 @@ public class Login extends Application{
 		
 		Button b2 = new Button("取		消");
 		b2.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				sexitAction();
 			}
@@ -193,23 +225,20 @@ public class Login extends Application{
         		account.setEditable(true);
         		password.setEditable(true);
         		log.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent e) {
-						logAction();
-					}
-				});
+        			public void handle(ActionEvent e) {
+        				logAction();
+        			}
+        		});
         		sign.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent e) {
-						signAction();
-					}
-				});
+        			public void handle(ActionEvent e) {
+        				signAction();
+        			}
+        		});
         		forget.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent e) {
-						forgetAction();
-					}
-				});	
+        			public void handle(ActionEvent e) {
+        				forgetAction();
+        			}
+        		});	
             }
         });
 		
@@ -217,7 +246,6 @@ public class Login extends Application{
 		Sign.setTitle("虚拟校园系统1.0-用户注册");
 		Sign.setScene(sscene);
 		Sign.setResizable(false);
-		Sign.setAlwaysOnTop(true);
 		Sign.show();
 	}
 	
@@ -289,19 +317,16 @@ public class Login extends Application{
 		account.setEditable(true);
 		password.setEditable(true);
 		log.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				logAction();
 			}
 		});
 		sign.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				signAction();
 			}
 		});
 		forget.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				forgetAction();
 			}
@@ -349,12 +374,12 @@ public class Login extends Application{
 		f.add(Newpassword1,1,3);
 		
 		Button b1 = new Button("确		认");
-		Newpassword1.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() {
-			@Override
-			public void handle(javafx.scene.input.KeyEvent e) {if(e.getCode()==KeyCode.ENTER)ForgetAction();}
+		Newpassword1.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent e) {
+				if(e.getCode()==KeyCode.ENTER)logAction();
+			}
 		});
 		b1.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				ForgetAction();
 			}
@@ -363,7 +388,6 @@ public class Login extends Application{
 		
 		Button b2 = new Button("取		消");
 		b2.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				fexitAction();
 			}
@@ -382,23 +406,20 @@ public class Login extends Application{
         		account.setEditable(true);
         		password.setEditable(true);
         		log.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent e) {
-						logAction();
-					}
-				});
+        			public void handle(ActionEvent e) {
+        				logAction();
+        			}
+        		});
         		sign.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent e) {
-						signAction();
-					}
-				});
+        			public void handle(ActionEvent e) {
+        				signAction();
+        			}
+        		});
         		forget.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent e) {
-						forgetAction();
-					}
-				});	
+        			public void handle(ActionEvent e) {
+        				forgetAction();
+        			}
+        		});	
             }
         });
 		
@@ -406,7 +427,6 @@ public class Login extends Application{
 		Forget.setTitle("虚拟校园系统1.0-忘记密码");
 		Forget.setScene(sscene);
 		Forget.setResizable(false);
-		Forget.setAlwaysOnTop(true);
 		Forget.show();
 	}
 	
@@ -454,19 +474,16 @@ public class Login extends Application{
 						account.setEditable(true);
 						password.setEditable(true);
 						log.setOnAction(new EventHandler<ActionEvent>() {
-							@Override
 							public void handle(ActionEvent e) {
 								logAction();
 							}
 						});
 						sign.setOnAction(new EventHandler<ActionEvent>() {
-							@Override
 							public void handle(ActionEvent e) {
 								signAction();
 							}
 						});
 						forget.setOnAction(new EventHandler<ActionEvent>() {
-							@Override
 							public void handle(ActionEvent e) {
 								forgetAction();
 							}
@@ -491,25 +508,22 @@ public class Login extends Application{
 		account.setEditable(true);
 		password.setEditable(true);
 		log.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				logAction();
 			}
 		});
 		sign.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				signAction();
 			}
 		});
 		forget.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				forgetAction();
 			}
 		});
 	}
 
+	
 }
-
 

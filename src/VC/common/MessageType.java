@@ -8,6 +8,8 @@ public interface MessageType {
 	
 	//Command
 	String CMD_QUY_BOOK_BOOKNAME = "CMD_QUY_BOOK_BOOKNAME";
+	String CMD_JUDGE_LOGIN = "CMD_JUDGE_LOGIN";
+	String CMD_GET_ALL_GOODS = "CMD_GET_ALL_GOODS";
 	
 	//Data
 	String DAT_QUY_BOOK_BOOKNAME = "DAT_QUY_BOOK_BOOKNAME";
