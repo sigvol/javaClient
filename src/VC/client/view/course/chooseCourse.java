@@ -10,6 +10,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
@@ -21,7 +23,10 @@ import VC.client.bz.Impl.CourseSrvImpl;
 import VC.client.view.Library.borrowbook;
 import VC.client.view.Library.mainFrame;
 import VC.client.view.Library.mybook;
+import VC.common.Course;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -65,14 +70,21 @@ public class chooseCourse extends JFrame implements ActionListener{
                 {"002", "Science",  "Dan","3", false }, 
                 {"003","Policy","Markus","2",false},};
 		
-		String[] n = { "�γ̱��", "�γ�����", "�ڿ���ʦ", "ѧ��","�Ƿ�ѡ��" };
+		String[] n = {  "课程编号", "课程名字", "授课老师", "学分","是否选择" };
 		List<Course> courselist = new ArrayList<Course>();
-		courselist = coursesrv.getAllCourse();
+		try {
+			courselist = coursesrv.getAllCourse();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		//defaultModel = new DefaultTableModel(p, n);
         JScrollPane s = new JScrollPane(table);
         f.getContentPane().add(s, BorderLayout.CENTER);
-		// ����һ��Ĭ�ϵı��ģ��
 
 		//defaultModel = new DefaultTableModel(p, n);
 		//table = new JTable(defaultModel);
@@ -113,7 +125,7 @@ public class chooseCourse extends JFrame implements ActionListener{
 		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		f.setLocation(200, 200);
 		f.setResizable(false);
-        f.setTitle("����У԰ͼ��ݽ������");
+        f.setTitle("虚拟校园图书馆借书界面");
         f.pack();
         f.setVisible(true);
 		f.addWindowListener(new WindowAdapter() {
@@ -128,7 +140,7 @@ public class chooseCourse extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("����γ�")) {
+		if (e.getActionCommand().equals("加入课程")) {
 			for (int i = 0; i < v1.size(); i++) {
 				int a = v1.indexOf(i);
 				System.out.println(courseName[a]);
@@ -137,12 +149,12 @@ public class chooseCourse extends JFrame implements ActionListener{
 			}
 
 		}
-		if (e.getActionCommand().equals("����")) {
+		if (e.getActionCommand().equals("返回")) {
 			new courseFrame();
 			f.setVisible(false);
 			//setVisible(false);
 		}
-		if (e.getActionCommand().equals("�ҵĿγ�")) {
+		if (e.getActionCommand().equals("我的课程")) {
 			new mycourse();
 			f.setVisible(false);
 		}
@@ -161,7 +173,7 @@ class MyTable18 extends AbstractTableModel {
             {"002", "Science",  "Dan","3", false }, 
             {"003","Policy","Markus","2",false},};
 	
-	String[] n = { "�γ̱��", "�γ�����", "�ڿ���ʦ", "ѧ��","�Ƿ�ѡ��" };
+	String[] n = { "课程编号", "课程名字", "授课老师", "学分","是否选择" };
 
 	@Override
 	public int getRowCount() {

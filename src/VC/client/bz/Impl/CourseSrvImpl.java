@@ -1,5 +1,6 @@
 package VC.client.bz.Impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +14,12 @@ public class CourseSrvImpl extends ClientSrvImpl{
 		super();
 	}
 
-	public List<Course> getAllCourse(xxxx){
+	public List<Course> getAllCourse() throws IOException, ClassNotFoundException{
 		
 		List<Course> retCourselist = new ArrayList<Course>();
 		String type = MessageType.CMD_GET_ALL_COURSE;
 		CourseMessage sendmsg = new CourseMessage();
-		//sendmsg.setSender("wls");
 		sendmsg.setType(type);
-		sendmsg.setCourse(xxxx);
 		
 		this.SendMessage(sendmsg);
 		
