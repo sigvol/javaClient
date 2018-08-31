@@ -40,7 +40,7 @@ public class giveupCourse extends JFrame implements ActionListener{
 	            {"002", "Science",  "Dan","3", false }, 
 	            {"003","Policy","Markus","2",false},};
 		
-		String[] n = { "�γ̱��", "�γ�����", "�ڿ���ʦ", "ѧ��","�Ƿ�ѡ��" };
+		String[] n = { "课程编号", "课程名字", "授课老师", "学分","是否选择" };
 
 		
 		JCheckBox jc1 = new JCheckBox();
@@ -77,13 +77,13 @@ public class giveupCourse extends JFrame implements ActionListener{
 		});
 
 		// JPanel panel = new JPanel();
-		JButton b = new JButton("�˿�");
+		JButton b = new JButton("退课");
 		panel.add(b);
 		b.addActionListener(this);
-		b = new JButton("�ҵĿγ�");
+		b = new JButton("返回");
 		panel.add(b);
 		b.addActionListener(this);
-		b = new JButton("����");
+		b = new JButton("我的课程");
 		panel.add(b);
 		b.addActionListener(this);
 
@@ -94,7 +94,7 @@ public class giveupCourse extends JFrame implements ActionListener{
 		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		f.setLocation(200, 200);
 		f.setResizable(false);
-        f.setTitle("����У԰ѡ��ϵͳ�˿ν���");
+        f.setTitle("虚拟校园选课系统退课界面");
         f.pack();
         f.setVisible(true);
 		f.addWindowListener(new WindowAdapter() {
@@ -109,7 +109,7 @@ public class giveupCourse extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("�˿�")) {
+		if (e.getActionCommand().equals("退课")) {
 			for (int i = 0; i < v1.size(); i++) {
 				int a = v1.indexOf(i);
 				System.out.println(courseName[a]);
@@ -117,12 +117,12 @@ public class giveupCourse extends JFrame implements ActionListener{
 			}
 
 		}
-		if (e.getActionCommand().equals("����")) {
+		if (e.getActionCommand().equals("返回")) {
 			new courseFrame();
 			f.setVisible(false);
 			//setVisible(false);
 		}
-		if (e.getActionCommand().equals("�ҵĿγ�")) {
+		if (e.getActionCommand().equals("我的课程")) {
 			new mycourse();
 			f.setVisible(false);
 		}
@@ -141,7 +141,7 @@ class MyTable1 extends AbstractTableModel {
             {"002", "Science",  "Dan","3", false }, 
             {"003","Policy","Markus","2",false},};
 	
-	String[] n = { "�γ̱��", "�γ�����", "�ڿ���ʦ", "ѧ��","�Ƿ��˿�" };
+	String[] n = { "课程编号", "课程名字", "授课老师", "学分","是否退课" };
 
 
 	@Override

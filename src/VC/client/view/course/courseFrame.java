@@ -7,14 +7,14 @@ import javax.swing.JFrame;
 import java.awt.*;
 
 public class courseFrame extends JFrame{
-	JButton button1 = new JButton("ѡ��");
-	JButton button2 = new JButton("�˿�");
-	JButton button3 = new JButton("�ҵĿγ�");
+	JButton button1 = new JButton("选课");
+	JButton button2 = new JButton("退课");
+	JButton button3 = new JButton("我的课程");
 	
 	JFrame jf = new JFrame();
 	public courseFrame() {
 		
-		jf.setTitle("����У԰ѡ��ϵͳ");
+		jf.setTitle("虚拟校园选课系统");
 		jf.setSize(new Dimension(500, 200));
 		jf.setLocation(200, 200);
 		jf.setVisible(true);

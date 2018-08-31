@@ -36,7 +36,7 @@ public class findFrame extends JFrame {
 
 	public findFrame() {
 		
-		jf.setTitle("����Уͼ��ݲ�ѯ����");
+		jf.setTitle("虚拟校图书馆查询界面");
 		jf.setSize(new Dimension(700, 505));
 		jf.setLocation(200, 200);
 		jf.setVisible(true);
@@ -44,10 +44,10 @@ public class findFrame extends JFrame {
 		jf.setLayout(null);
 		jf.setLayout(new GridLayout(4, 1));		
 
-		JLabel jb = new JLabel("��ѯҳ��");
+		JLabel jb = new JLabel("查询页面");
 		jp.add(jb);
 		jf.add(jp);
-		JLabel jb1 = new JLabel("����Ҫ��ѯ��������");
+		JLabel jb1 = new JLabel("输入要查询的书名：");
 		final JTextField jt = new JTextField(15);
 		jp1.add(jb1);
 		jp1.add(jt);
@@ -58,16 +58,16 @@ public class findFrame extends JFrame {
 
 		JTable tb = new JTable();
 		//tb.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// �����ѡ��ģʽ����Ϊֻ������ѡ�񡢵����������ѡ������ѡ��
-		tb.setFont(new Font("΢���ź�", Font.PLAIN, 14));
+		tb.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		tb.setRowHeight(30);
 		JTableHeader header = tb.getTableHeader(); // ��ȡ JTable ��ͷ�Ķ���
-		header.setFont(new Font("΢���ź�", Font.PLAIN, 16));
+		header.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		header.setPreferredSize(new Dimension(header.getWidth(), 35)); // ���ô��������ѡ��С
 		scrollPane.setViewportView(tb);
 		model = (DefaultTableModel) tb.getModel();
-		model.setColumnIdentifiers(new Object[] { "���", "����", "�ݲ�", "����" });
+		model.setColumnIdentifiers(new Object[] { "编号", "书名", "馆藏", "数量" });
 
-		JButton bt = new JButton("��ѯ");
+		JButton bt = new JButton("查询");
 		bt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -100,7 +100,7 @@ public class findFrame extends JFrame {
 			}
 		});
 		
-		JButton bt2 = new JButton("����");
+		JButton bt2 = new JButton("返回");
 		bt2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new mainFrame();

@@ -60,7 +60,7 @@ public class borrowbook extends JFrame implements ActionListener {
                 {"Policy","768","Markus",false},
                 {"Furture","111","Song",false},};
 		
-		String[] n = { "����", "������", "����", "�Ƿ�����鵥" };
+		String[] n = { "书名", "出版商", "作者", "是否加入书单" };
 		
 
 		//defaultModel = new DefaultTableModel(p, n);
@@ -90,13 +90,13 @@ public class borrowbook extends JFrame implements ActionListener {
 		});
 
 		// JPanel panel = new JPanel();
-		JButton b = new JButton("�����鵥");
+		JButton b = new JButton("加入书单");
 		panel.add(b);
 		b.addActionListener(this);
-		b = new JButton("�ҵ��鵥");
+		b = new JButton("我的书单");
 		panel.add(b);
 		b.addActionListener(this);
-		b = new JButton("����");
+		b = new JButton("返回");
 		panel.add(b);
 		b.addActionListener(this);
 
@@ -107,7 +107,7 @@ public class borrowbook extends JFrame implements ActionListener {
 		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		f.setLocation(200, 200);
 		f.setResizable(false);
-        f.setTitle("����У԰ͼ��ݽ������");
+        f.setTitle("虚拟校园图书馆借书界面");
         f.pack();
         f.setVisible(true);
 		f.addWindowListener(new WindowAdapter() {
@@ -122,7 +122,7 @@ public class borrowbook extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("�����鵥")) {
+		if (e.getActionCommand().equals("加入书单")) {
 			for (int i = 0; i < v1.size(); i++) {
 				int a = v1.indexOf(i);
 				System.out.println(bookName[a]);
@@ -131,12 +131,12 @@ public class borrowbook extends JFrame implements ActionListener {
 			}
 
 		}
-		if (e.getActionCommand().equals("����")) {
+		if (e.getActionCommand().equals("返回")) {
 			new mainFrame();
 			f.setVisible(false);
 			//setVisible(false);
 		}
-		if (e.getActionCommand().equals("�ҵ��鵥")) {
+		if (e.getActionCommand().equals("我的书单")) {
 			new mybook();
 			f.setVisible(false);
 		}
@@ -157,7 +157,7 @@ class MyTable18 extends AbstractTableModel {
             {"Policy","768","Markus",false},
             {"Furture","111","Song",false},};
 
-	String[] n = { "����", "������", "����", "�Ƿ�����鵥" };
+	String[] n = { "书名", "出版商", "作者", "是否加入书单" };
 
 	@Override
 	public int getRowCount() {

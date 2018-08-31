@@ -31,14 +31,14 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class mainFrame extends JFrame{
-	JButton button1 = new JButton("��ѯ");
-	JButton button2 = new JButton("����");
-	JButton button3 = new JButton("����");
-	JButton button4 = new JButton("�ҵ��鵥");
+	JButton button1 = new JButton("查询");
+	JButton button2 = new JButton("借书");
+	JButton button3 = new JButton("还书");
+	JButton button4 = new JButton("我的书单");
 	JFrame jf = new JFrame();
 	public mainFrame() {
 		
-		jf.setTitle("����Уͼ���");
+		jf.setTitle("虚拟校图书馆");
 		jf.setSize(new Dimension(550, 200));
 		jf.setLocation(200, 200);
 		jf.setVisible(true);
