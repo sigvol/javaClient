@@ -12,43 +12,62 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 
+import VC.client.bz.Impl.ShopSrvImpl;
+import VC.common.Goods;
+
 public class ShopPage extends JFrame{
-	String[] GoodsName = {"商品名称","apple","orange","banana"};
-	String[] GoodsID = {"商品编号","001","002","003",};
-	String[] GoodsPrice = {"商品价格","2.5","3.0","2.0"};
-	String[] NUM;
 	
-	JPanel p1 = new JPanel(new GridLayout(GoodsName.length+1,1));
-	JPanel p2 = new JPanel(new GridLayout(GoodsName.length+1,1));
-	JPanel p3 = new JPanel(new GridLayout(GoodsName.length+1,1));
-	JPanel p4 = new JPanel(new GridLayout(GoodsName.length+1,1));
+	
+	public ShopSrvImpl shopsrv = new ShopSrvImpl();
 	
 	JButton jb1 = new JButton("加入购物车");
 	JButton jb2 = new JButton("我的购物车");
 	
 	ArrayList<JTextField> jtfs = new ArrayList<>();
 	
-	public ShopPage() {
+	public ShopPage() throws ClassNotFoundException, IOException {
+		
+		
+		List<String> GoodsName = new ArrayList<String>();
+		List<String> GoodsID = new ArrayList<String>();
+		List<String> GoodsPrice = new ArrayList<String>();
+		//List<String> NUM = new ArrayList<String>();
+		List<Goods> goodslist = shopsrv.getAllGoods();
+		
+		for(int i=0;i<goodslist.size();i++) {
+			GoodsName.add(i, goodslist.get(i).getProductName());
+			GoodsID.add(i, goodslist.get(i).getGoodsID());
+			GoodsPrice.add(i, goodslist.get(i).getValue());
+			//NUM.add(i, goodslist.get(i).getGoodsNum());
+		}
+		
+		JPanel p1 = new JPanel(new GridLayout(GoodsName.size()+1,1));
+		JPanel p2 = new JPanel(new GridLayout(GoodsName.size()+1,1));
+		JPanel p3 = new JPanel(new GridLayout(GoodsName.size()+1,1));
+		JPanel p4 = new JPanel(new GridLayout(GoodsName.size()+1,1));
+		
 		Container container = this.getContentPane();
 		container.setLayout(new GridLayout(1,4,20,100));
 		
-		for(int i=0;i<GoodsID.length+1;i++) {
-			if(i!=GoodsID.length) {
-				p1.add(new JLabel(GoodsID[i]));
+		for(int i=0;i<GoodsID.size()+1;i++) {
+			if(i!=GoodsID.size()) {
+				p1.add(new JLabel(GoodsID.get(i)));
 			}
 			else {
 				p1.add(jb1);
 			}
 			
 		}
-		for(int i=0;i<GoodsName.length;i++) {
-			p2.add(new JLabel(GoodsName[i]));
+		for(int i=0;i<GoodsName.size();i++) {
+			p2.add(new JLabel(GoodsName.get(i)));
 		}
-		for(int i=0;i<GoodsPrice.length+1;i++) {
-			if(i!=GoodsPrice.length) {
-				p3.add(new JLabel(GoodsPrice[i]));
+		for(int i=0;i<GoodsPrice.size()+1;i++) {
+			if(i!=GoodsPrice.size()) {
+				p3.add(new JLabel(GoodsPrice.get(i)));
 			}
 			else {
 				p3.add(jb2);
@@ -57,7 +76,7 @@ public class ShopPage extends JFrame{
 		
 		//ArrayList<JTextField> jtfs = new ArrayList<>();
 		
-		for(int i=0;i<GoodsID.length;i++) {
+		for(int i=0;i<GoodsID.size();i++) {
 			if(i==0) {
 				p4.add(new JLabel("商品数量"));
 			}
@@ -113,7 +132,15 @@ public class ShopPage extends JFrame{
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	public static void main (String[] args) {
-		new ShopPage();
+		try {
+			new ShopPage();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

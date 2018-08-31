@@ -18,7 +18,15 @@ public class shopFrame extends JFrame{
 	class LoginOKAction1 implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			//JOptionPane.showMessageDialog(null, "将进入另一个窗体！");
-			new ShopPage();
+			try {
+				new ShopPage();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			setVisible(false);
 		}
 	}
