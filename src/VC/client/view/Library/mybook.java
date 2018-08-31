@@ -40,7 +40,7 @@ public class mybook extends JFrame implements ActionListener{
 	JPanel panel = new JPanel();
 	Vector v1 = new Vector();
 	JFrame f = new JFrame();
-	
+
 	public mybook() {
 		
 		String[][] p = { { "History", "987", "Mike" }, { "Science", "124", "Dan"},

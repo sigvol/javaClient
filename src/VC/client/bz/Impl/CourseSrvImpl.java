@@ -30,7 +30,20 @@ public class CourseSrvImpl extends ClientSrvImpl{
 		return retCourselist;
 	}
 	
-	public void addCourse() {
+	public boolean addCourse(String coursename, String username) throws ClassNotFoundException, IOException {
 		
+		boolean res = false;
+		String type = MessageType.CMD_GET_ALL_COURSE;
+		CourseMessage sendmsg = new CourseMessage();
+		sendmsg.setType(type);
+		sendmsg.setID(username);
+		sendmsg.setCourseName(coursename);
+		
+		this.SendMessage(sendmsg);
+		
+		CourseMessage rcvmsg = new CourseMessage();
+		rcvmsg = (CourseMessage) this.ReceiveMessage();
+		res = rcvmsg.isRes();
+		return res;
 	}
 }
