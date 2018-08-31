@@ -30,4 +30,6 @@ public class ShopSrvImpl extends ClientSrvImpl{
 		
 		return retGoodslist;
 	}
+	
+	
 }
