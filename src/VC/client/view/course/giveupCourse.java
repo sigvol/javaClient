@@ -57,10 +57,10 @@ public class giveupCourse extends JFrame implements ActionListener{
 		}
 		System.out.println("size of courseName" + mycourselist.size());
 		for (int i = 0; i < mycourselist.size(); i++) {
-			System.out.println("zero the added is " + mycourselist.get(i).toString());
-			System.out.println("first the added course name is "+ mycourselist.get(i).getCourseName());
+			//System.out.println("zero the added is " + mycourselist.get(i).toString());
+			//System.out.println("first the added course name is "+ mycourselist.get(i).getCourseName());
 			courseName.add(mycourselist.get(i).getCourseName());
-			System.out.println("second the added course name is "+ courseName.get(i));
+			//System.out.println("second the added course name is "+ courseName.get(i));
 		}
 		
 		//JFrame f = new JFrame();
@@ -140,6 +140,7 @@ public class giveupCourse extends JFrame implements ActionListener{
 				System.out.println(courseName.get(a));
 				try {
 					System.out.println("start step1");
+					coursesrv = new CourseSrvImpl("mike");
 					coursesrv.deleteCourse(courseName.get(a), "mike");
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block

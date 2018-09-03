@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +25,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import VC.client.view.Library.mainFrame;
-
+import VC.client.bz.Impl.LibrarySrvImpl;
+import VC.client.view.Library.borrowbook;
+import VC.client.view.Library.mainFrame;
+import VC.client.view.Library.mybook;
+import VC.common.Book;
 public class findFrame extends JFrame {
 	public static DefaultTableModel model = new DefaultTableModel();
 	
@@ -33,7 +38,7 @@ public class findFrame extends JFrame {
 	JPanel jp2 = new JPanel();
 	JPanel jp3 = new JPanel();
 	JFrame jf = new JFrame();
-
+	public LibrarySrvImpl booksrv = new LibrarySrvImpl("mike");
 	public findFrame() {
 		
 		jf.setTitle("虚拟校图书馆查询界面");
@@ -57,15 +62,15 @@ public class findFrame extends JFrame {
 		jf.add(jp3);
 
 		JTable tb = new JTable();
-		//tb.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// �����ѡ��ģʽ����Ϊֻ������ѡ�񡢵����������ѡ������ѡ��
+		//tb.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 锟斤拷锟斤拷锟窖★拷锟侥Ｊ斤拷锟斤拷锟轿伙拷锟斤拷锟斤拷锟窖★拷瘛⒌锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷选锟斤拷锟斤拷锟斤拷选锟斤拷
 		tb.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		tb.setRowHeight(30);
-		JTableHeader header = tb.getTableHeader(); // ��ȡ JTable ��ͷ�Ķ���
-		header.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-		header.setPreferredSize(new Dimension(header.getWidth(), 35)); // ���ô��������ѡ��С
+		JTableHeader header = tb.getTableHeader(); // 锟斤拷取 JTable 锟斤拷头锟侥讹拷锟斤拷
+		header.setFont(new Font("微软雅黑",  Font.PLAIN, 16));
+		header.setPreferredSize(new Dimension(header.getWidth(), 35)); // 锟斤拷锟矫达拷锟斤拷锟斤拷锟斤拷锟窖★拷锟叫�
 		scrollPane.setViewportView(tb);
 		model = (DefaultTableModel) tb.getModel();
-		model.setColumnIdentifiers(new Object[] { "编号", "书名", "馆藏", "数量" });
+		model.setColumnIdentifiers(new Object[] {  "编号", "书名", "馆藏", "数量" });
 
 		JButton bt = new JButton("查询");
 		bt.addActionListener(new ActionListener() {
@@ -89,12 +94,21 @@ public class findFrame extends JFrame {
 						tb.setModel(model);
 					}
 					if (flag == true) {
-						JOptionPane.showMessageDialog(null, "�ñ��鲻����!");
+						JOptionPane.showMessageDialog(null, "锟矫憋拷锟介不锟斤拷锟斤拷!");
 					}
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 			*/
+				try {
+					booksrv.searchName(jt.getText());
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				new borrowbook();
             	setVisible(false);
 			}

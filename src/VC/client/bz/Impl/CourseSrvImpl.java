@@ -59,7 +59,7 @@ public class CourseSrvImpl extends ClientSrvImpl{
 		sendmsg.setID(username);
 		sendmsg.setCourseName(coursename);
 
-		System.out.println("start send message");
+		//System.out.println("start send message");
 		this.SendMessage(sendmsg);
 		
 		CourseMessage rcvmsg = new CourseMessage();

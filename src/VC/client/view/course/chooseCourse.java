@@ -65,10 +65,10 @@ public class chooseCourse extends JFrame implements ActionListener {
 		String[] n = { "课程编号", "课程名字", "授课老师", "学分", "是否选择" };
 
 		List<Course> courselist = new ArrayList<Course>();
-		System.out.println("step1");
+		//System.out.println("step1");
 		try {
 			courselist = coursesrv.getAllCourse();
-			System.out.println("STEP2");
+			//System.out.println("STEP2");
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -78,12 +78,12 @@ public class chooseCourse extends JFrame implements ActionListener {
 			e1.printStackTrace();
 			System.out.println("fail2");
 		}
-		System.out.println("STEP3");
+		//System.out.println("STEP3");
 		for (int i = 0; i < courselist.size(); i++) {
 			courseName.add(courselist.get(i).getCourseName());
 			System.out.println(courseName.get(i));
 		}
-		System.out.println("STEP4");
+		//System.out.println("STEP4");
 		// JFrame f = new JFrame();
 		MyTable18 mt = new MyTable18();
 		final JTable table = new JTable(mt);
@@ -150,13 +150,15 @@ public class chooseCourse extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("加入课程")) {
 			for (int i = 0; i < v1.size(); i++) {
-				int a = v1.indexOf(i);
-				//System.out.println(a);
+				int a = (int) v1.get(i);
+				System.out.println(a);
 				//System.out.println(courseName.get(a));
 				// to do: the add course part
 				// v1.size()
 				try {
-					coursesrv.addCourse(courseName.get(a), "wls");
+					coursesrv = new CourseSrvImpl("mike");
+					System.out.println(courseName.get(a));
+					coursesrv.addCourse(courseName.get(a), "mike");
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

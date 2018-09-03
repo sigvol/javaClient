@@ -11,12 +11,17 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -35,6 +40,14 @@ import javax.swing.WindowConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import VC.client.bz.Impl.CourseSrvImpl;
+import VC.client.bz.Impl.LibrarySrvImpl;
+import VC.client.view.Library.borrowbook;
+import VC.client.view.Library.mainFrame;
+import VC.client.view.Library.mybook;
+import VC.common.Book;
+
+
 public class borrowbook extends JFrame implements ActionListener {
 	
 	//DefaultTableModel defaultModel = null;
@@ -42,17 +55,33 @@ public class borrowbook extends JFrame implements ActionListener {
 	JPanel panel = new JPanel();
 	Vector v1 = new Vector();
 	JFrame f = new JFrame();
+	public LibrarySrvImpl booksrv = new LibrarySrvImpl("mike");
 
-	String[] bookName = { "History", "Science", "Future", "Policy", "Furture" };
-
+	//String[] bookName = { "History", "Science", "Future", "Policy", "Furture" };
+	Vector<String> bookName = new Vector<String>();
 	public borrowbook() {
+	
+		List<Book> booklist = new ArrayList<Book>();
+		try {
+			booklist = booksrv.getAllBook();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		for (int i = 0; i < booklist.size(); i++) {
+			bookName.add(booklist.get(i).getBookName());
+		}
 		//JFrame f = new JFrame();
 		MyTable18 mt = new MyTable18();
 		final JTable table = new JTable(mt);
 		JCheckBox jc1 = new JCheckBox();
 		table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(jc1));
 		table.setPreferredScrollableViewportSize(new Dimension(400, 150));
-		
+		/*
 		Object[][] p = {
                 { "History", "987", "Mike",false },
                 { "Science", "124", "Dan", false }, 
@@ -60,13 +89,13 @@ public class borrowbook extends JFrame implements ActionListener {
                 {"Policy","768","Markus",false},
                 {"Furture","111","Song",false},};
 		
-		String[] n = { "书名", "出版商", "作者", "是否加入书单" };
-		
+		String[] n = { "涔﹀悕", "鍑虹増鍟�, "浣滆�", "鏄惁鍔犲叆涔﹀崟" };
+		*/
 
 		//defaultModel = new DefaultTableModel(p, n);
         JScrollPane s = new JScrollPane(table);
         f.getContentPane().add(s, BorderLayout.CENTER);
-		// ����һ��Ĭ�ϵı��ģ��
+		// 锟斤拷锟斤拷一锟斤拷默锟较的憋拷锟侥ｏ拷锟�
 
 		//defaultModel = new DefaultTableModel(p, n);
 		//table = new JTable(defaultModel);
@@ -107,7 +136,7 @@ public class borrowbook extends JFrame implements ActionListener {
 		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		f.setLocation(200, 200);
 		f.setResizable(false);
-        f.setTitle("虚拟校园图书馆借书界面");
+        f.setTitle("虚拟校园图书馆系统借书界面");
         f.pack();
         f.setVisible(true);
 		f.addWindowListener(new WindowAdapter() {
@@ -125,9 +154,26 @@ public class borrowbook extends JFrame implements ActionListener {
 		if (e.getActionCommand().equals("加入书单")) {
 			for (int i = 0; i < v1.size(); i++) {
 				int a = v1.indexOf(i);
-				System.out.println(bookName[a]);
-				// �Ժ�������ݿ�
+				System.out.println(bookName.get(a));
+				// 锟皆猴拷锟斤拷锟斤拷锟斤拷菘锟�
 			
+			}
+			for (int i = 0; i < v1.size(); i++) {
+				int a = (int) v1.get(i);
+				//System.out.println(courseName.get(a));
+				// to do: the add course part
+				// v1.size()
+				try {
+					booksrv = new LibrarySrvImpl("mike");
+					booksrv.addBook(bookName.get(a), "mike");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 
 		}
@@ -150,15 +196,39 @@ public class borrowbook extends JFrame implements ActionListener {
 }
 
 class MyTable18 extends AbstractTableModel {
+	public LibrarySrvImpl booksrv = new LibrarySrvImpl("mike");
+	public Object[][] p = null;
+	/*
 	Object[][] p = {
             { "History", "987", "Mike",false },
             { "Science", "124", "Dan", false }, 
             {"Future","246","Peter",false},
             {"Policy","768","Markus",false},
             {"Furture","111","Song",false},};
+*/
+	public String[] n = { "书名", "出版商 ","作者", "是否加入" };
 
-	String[] n = { "书名", "出版商", "作者", "是否加入书单" };
+	public MyTable18() {
+		super();
+		List<Book> booklist = new ArrayList<Book>();
+		try {
+			booklist = booksrv.getAllBook();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
+		p = new Object[booklist.size()][4];
+		for (int i = 0; i < booklist.size(); i++) {
+			p[i][0] = booklist.get(i).getBookName();
+			p[i][1] = booklist.get(i).getBookPublisher();
+			p[i][2] = booklist.get(i).getBookAuthor();
+			p[i][3] = false;
+		}
+	}
 	@Override
 	public int getRowCount() {
 		return p.length;
