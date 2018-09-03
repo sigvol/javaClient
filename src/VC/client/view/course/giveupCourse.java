@@ -16,9 +16,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import java.io.IOException;
+import VC.client.bz.Impl.CourseSrvImpl;
+import VC.client.view.Library.borrowbook;
+import VC.client.view.Library.mainFrame;
+import VC.client.view.Library.mybook;
+import VC.common.Course;
 
 public class giveupCourse extends JFrame implements ActionListener{
 	
@@ -28,32 +38,44 @@ public class giveupCourse extends JFrame implements ActionListener{
 	Vector v1 = new Vector();
 	JFrame f = new JFrame();
 
-	String[] courseName = { "History", "Science", "Policy" };
+	List<String> courseName = new ArrayList<String>();
+	public CourseSrvImpl coursesrv = new CourseSrvImpl("mike");
+	//String[] courseName = { "History", "Science", "Policy" };
 
 	public giveupCourse() {
+		List<Course> mycourselist = new ArrayList<Course>();
+		try {
+			mycourselist = coursesrv.getallMyCourse();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("fail1");
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("fail2");
+			e1.printStackTrace();
+		}
+		System.out.println("size of courseName" + mycourselist.size());
+		for (int i = 0; i < mycourselist.size(); i++) {
+			System.out.println("zero the added is " + mycourselist.get(i).toString());
+			System.out.println("first the added course name is "+ mycourselist.get(i).getCourseName());
+			courseName.add(mycourselist.get(i).getCourseName());
+			System.out.println("second the added course name is "+ courseName.get(i));
+		}
+		
 		//JFrame f = new JFrame();
 		MyTable1 mt1 = new MyTable1();
 		
 		final JTable table1 = new JTable(mt1);
-		Object[][] p = {
-	            {"001", "History", "Mike","2",false },
-	            {"002", "Science",  "Dan","3", false }, 
-	            {"003","Policy","Markus","2",false},};
-		
-		String[] n = { "课程编号", "课程名字", "授课老师", "学分","是否选择" };
-
-		
 		JCheckBox jc1 = new JCheckBox();
 		table1.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(jc1));
 		table1.setPreferredScrollableViewportSize(new Dimension(400, 150));
 		
 		
-		
-
 		//defaultModel = new DefaultTableModel(p, n);
         JScrollPane s = new JScrollPane(table1);
         f.getContentPane().add(s, BorderLayout.CENTER);
-		// ����һ��Ĭ�ϵı��ģ��
+		// 锟斤拷锟斤拷一锟斤拷默锟较的憋拷锟侥ｏ拷锟�
 
 		//defaultModel = new DefaultTableModel(p, n);
 		//table = new JTable(defaultModel);
@@ -67,7 +89,7 @@ public class giveupCourse extends JFrame implements ActionListener{
 				Object obj = table1.getValueAt(row, column);
 				Object obj1 = true;
 				if (table1.isCellSelected(row, column)) {
-					System.out.println(obj);
+					//System.out.println(obj);
 					if (obj.equals(obj1)) {
 						//System.out.println(row);
 						v1.add(row);
@@ -80,10 +102,10 @@ public class giveupCourse extends JFrame implements ActionListener{
 		JButton b = new JButton("退课");
 		panel.add(b);
 		b.addActionListener(this);
-		b = new JButton("返回");
+		b = new JButton("我的课程");
 		panel.add(b);
 		b.addActionListener(this);
-		b = new JButton("我的课程");
+		b = new JButton("返回");
 		panel.add(b);
 		b.addActionListener(this);
 
@@ -94,7 +116,7 @@ public class giveupCourse extends JFrame implements ActionListener{
 		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		f.setLocation(200, 200);
 		f.setResizable(false);
-        f.setTitle("虚拟校园选课系统退课界面");
+        f.setTitle("虚拟校园选课界面退课");
         f.pack();
         f.setVisible(true);
 		f.addWindowListener(new WindowAdapter() {
@@ -111,9 +133,22 @@ public class giveupCourse extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("退课")) {
 			for (int i = 0; i < v1.size(); i++) {
-				int a = v1.indexOf(i);
-				System.out.println(courseName[a]);
-				// �Ժ�������ݿ�
+				int a = (int) v1.get(i);
+				//System.out.println(courseName.get(a));
+				// to do: the add course part
+				// v1.size()
+				System.out.println(courseName.get(a));
+				try {
+					System.out.println("start step1");
+					coursesrv.deleteCourse(courseName.get(a), "mike");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 
 		}
@@ -136,13 +171,33 @@ public class giveupCourse extends JFrame implements ActionListener{
 }
 
 class MyTable1 extends AbstractTableModel {
-	Object[][] p = {
-            {"001", "History", "Mike","2",false },
-            {"002", "Science",  "Dan","3", false }, 
-            {"003","Policy","Markus","2",false},};
-	
-	String[] n = { "课程编号", "课程名字", "授课老师", "学分","是否退课" };
+	public CourseSrvImpl coursesrv = new CourseSrvImpl("mike");
+	public Object[][] p = null;
 
+	public String[] n = { "课程编号", "课程名字", "授课老师", "学分","是否选择" };
+
+	public MyTable1() {
+		super();
+		List<Course> courselist = new ArrayList<Course>();
+		try {
+			courselist = coursesrv.getallMyCourse();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		p = new Object[courselist.size()][5];
+		for (int i = 0; i < courselist.size(); i++) {
+			p[i][0] = courselist.get(i).getCourseID();
+			p[i][1] = courselist.get(i).getCourseName();
+			p[i][2] = courselist.get(i).getCourseTeacher();
+			p[i][3] = courselist.get(i).getCourseNum();
+			p[i][4] = false;
+		}
+	}
 
 	@Override
 	public int getRowCount() {

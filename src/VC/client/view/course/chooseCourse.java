@@ -54,7 +54,7 @@ public class chooseCourse extends JFrame implements ActionListener {
 	List<String> courseName = new ArrayList<String>();
 	// String[] courseName = { "History", "Science", "Policy" };
 
-	public CourseSrvImpl coursesrv = new CourseSrvImpl();
+	public CourseSrvImpl coursesrv = new CourseSrvImpl("mike");
 
 	public chooseCourse() {
 
@@ -65,20 +65,25 @@ public class chooseCourse extends JFrame implements ActionListener {
 		String[] n = { "课程编号", "课程名字", "授课老师", "学分", "是否选择" };
 
 		List<Course> courselist = new ArrayList<Course>();
+		System.out.println("step1");
 		try {
 			courselist = coursesrv.getAllCourse();
+			System.out.println("STEP2");
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			System.out.println("fail1");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			System.out.println("fail2");
 		}
-		Vector<String> courseName = new Vector<String>();
+		System.out.println("STEP3");
 		for (int i = 0; i < courselist.size(); i++) {
 			courseName.add(courselist.get(i).getCourseName());
+			System.out.println(courseName.get(i));
 		}
-		
+		System.out.println("STEP4");
 		// JFrame f = new JFrame();
 		MyTable18 mt = new MyTable18();
 		final JTable table = new JTable(mt);
@@ -146,7 +151,8 @@ public class chooseCourse extends JFrame implements ActionListener {
 		if (e.getActionCommand().equals("加入课程")) {
 			for (int i = 0; i < v1.size(); i++) {
 				int a = v1.indexOf(i);
-				System.out.println(courseName.get(a));
+				//System.out.println(a);
+				//System.out.println(courseName.get(a));
 				// to do: the add course part
 				// v1.size()
 				try {
@@ -182,7 +188,7 @@ public class chooseCourse extends JFrame implements ActionListener {
 
 class MyTable18 extends AbstractTableModel {
 
-	public CourseSrvImpl coursesrv = new CourseSrvImpl();
+	public CourseSrvImpl coursesrv = new CourseSrvImpl("mike");
 	public Object[][] p = null;
 
 	public String[] n = { "课程编号", "课程名字", "授课老师", "学分", "是否选择" };

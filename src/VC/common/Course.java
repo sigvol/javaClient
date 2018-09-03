@@ -1,10 +1,11 @@
 package VC.common;
 
 public class Course implements java.io.Serializable{
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8251698032892536679L;
+	private static final long serialVersionUID = -8273011997173165320L;
 	private String courseName;
 	private String score;
 	private String courseTime;
@@ -12,6 +13,7 @@ public class Course implements java.io.Serializable{
 	private String courseRoom;
 	private String courseNum;
 	private String courseTeacher;
+	private String Credit;
 	
     public Course() {
 		
@@ -69,11 +71,21 @@ public class Course implements java.io.Serializable{
 	public void setCourseTeacher(String courseTeacher) {
 		this.courseTeacher = courseTeacher;
 	}
+	
 	public String toString() {
 		return "Course [courseName=" + courseName + ", courseID=" + courseID
 				 + ", score=" + score+ ", courseTime=" + courseTime
 				 + ", courseRoom=" + courseRoom+", courseNum=" + courseNum
 				 + ", courseTeacher=" + courseTeacher;
 	}
+
+	public String getCredit() {
+		return Credit;
+	}
+
+	public void setCredit(String credit) {
+		Credit = credit;
+	}
+
 	
 }

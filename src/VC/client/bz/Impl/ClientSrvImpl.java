@@ -15,7 +15,23 @@ public class ClientSrvImpl {
 	private static final int SERVER_PORT = SocketConstant.SERVER_PORT;
 	
 	private Socket socket = null;
+	private String User = null;
 	
+	public ClientSrvImpl(String user) {
+		
+		this.setUser(user);
+		
+		try {
+			this.setSocket(new Socket(SERVER_ADDRESS, SERVER_PORT));
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+			
 	public ClientSrvImpl() {
 		try {
 			this.setSocket(new Socket(SERVER_ADDRESS, SERVER_PORT));
@@ -50,6 +66,14 @@ public class ClientSrvImpl {
 
 	public void setSocket(Socket socket) {
 		this.socket = socket;
+	}
+
+	public String getUser() {
+		return User;
+	}
+
+	public void setUser(String user) {
+		User = user;
 	}
 	
 }

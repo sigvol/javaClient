@@ -10,46 +10,45 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
-
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JCheckBox;
-import java.awt.Container;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
+import java.io.IOException;
+import VC.client.bz.Impl.CourseSrvImpl;
+import VC.common.Course;
 
 public class mycourse extends JFrame implements ActionListener{
 	DefaultTableModel defaultModel = null;
 	JPanel panel = new JPanel();
 	Vector v1 = new Vector();
 	JFrame f = new JFrame();
+	public CourseSrvImpl coursesrv = new CourseSrvImpl("mike");
 	
 	public mycourse() {
+		Object[][] p = null;
+		List<Course> mycourselist = new ArrayList<Course>();
+		try {
+			mycourselist = coursesrv.getallMyCourse();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		p = new Object[mycourselist.size()][5];
 		
-		Object[][] p = {
-                {"001", "History", "Mike","2",false },
-                {"002", "Science",  "Dan","3", false }, 
-                {"003","Policy","Markus","2",false},};
+		for (int i = 0; i < mycourselist.size(); i++) {
+			p[i][0] = mycourselist.get(i).getCourseID();
+			p[i][1] = mycourselist.get(i).getCourseName();
+			p[i][2] = mycourselist.get(i).getCourseTeacher();
+			p[i][3] = mycourselist.get(i).getCourseNum();
+		}
+		
 		
 		String[] n = { "课程编号", "课程名字", "授课老师", "学分","是否选择" };
 		
@@ -60,7 +59,7 @@ public class mycourse extends JFrame implements ActionListener{
 		JScrollPane s = new JScrollPane(table);
         f.getContentPane().add(s, BorderLayout.CENTER);
         
-        JButton b = new JButton("还书");
+        JButton b = new JButton("返回");
 		b = new JButton("返回");
 		panel.add(b);
 		b.addActionListener(this);
@@ -72,7 +71,7 @@ public class mycourse extends JFrame implements ActionListener{
 		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		f.setLocation(200, 200);
 		f.setResizable(false);
-        f.setTitle("虚拟校园图书馆借书界面");
+        f.setTitle("虚拟校园选课界面我的课程");
         f.pack();
         f.setVisible(true);
 		f.addWindowListener(new WindowAdapter() {

@@ -13,7 +13,11 @@ public class CourseSrvImpl extends ClientSrvImpl{
 	public CourseSrvImpl() {
 		super();
 	}
-
+	
+	public CourseSrvImpl(String user) {
+		super(user);
+	}
+	
 	public List<Course> getAllCourse() throws IOException, ClassNotFoundException{
 		
 		List<Course> retCourselist = new ArrayList<Course>();
@@ -33,7 +37,7 @@ public class CourseSrvImpl extends ClientSrvImpl{
 	public boolean addCourse(String coursename, String username) throws ClassNotFoundException, IOException {
 		
 		boolean res = false;
-		String type = MessageType.CMD_GET_ALL_COURSE;
+		String type = MessageType.CMD_ADD_ALL_COURSE;
 		CourseMessage sendmsg = new CourseMessage();
 		sendmsg.setType(type);
 		sendmsg.setID(username);
@@ -45,5 +49,39 @@ public class CourseSrvImpl extends ClientSrvImpl{
 		rcvmsg = (CourseMessage) this.ReceiveMessage();
 		res = rcvmsg.isRes();
 		return res;
+	}
+	
+	public boolean deleteCourse(String coursename, String username) throws ClassNotFoundException, IOException{
+		boolean res = false;
+		String type = MessageType.CMD_DELETE_ALL_COURSE;
+		CourseMessage sendmsg = new CourseMessage();
+		sendmsg.setType(type);
+		sendmsg.setID(username);
+		sendmsg.setCourseName(coursename);
+
+		System.out.println("start send message");
+		this.SendMessage(sendmsg);
+		
+		CourseMessage rcvmsg = new CourseMessage();
+		rcvmsg = (CourseMessage) this.ReceiveMessage();
+		res = rcvmsg.isRes();
+		return res;
+		
+	}
+	
+	public List<Course> getallMyCourse() throws IOException, ClassNotFoundException{
+		List<Course> myCourselist = new ArrayList<Course>();
+		String type = MessageType.CMD_GET_ALL_MYCOURSE;
+		CourseMessage sendmsg = new CourseMessage();
+		sendmsg.setType(type);
+		sendmsg.setID(this.getUser());
+		
+		this.SendMessage(sendmsg);
+		
+		CourseMessage rcvmsg = new CourseMessage();
+		rcvmsg = (CourseMessage) this.ReceiveMessage();
+		myCourselist = rcvmsg.getCourselist();
+		
+		return myCourselist;
 	}
 }
